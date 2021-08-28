@@ -6,6 +6,9 @@
 
 <Br />
 
+## 🖥 화면 결과물
+
+<Br />
 ## 🚩 TODO-LIST 체크 박스 기능
 
 ![](https://images.velog.io/images/leemember/post/e60a249f-22b7-40c5-ad0f-975b7997d086/todo_01.gif)
@@ -29,12 +32,12 @@
 ```
 📦 src
  ┣ 📂components
- ┃ ┃ ┣ 📜 TodoCreate.jsx 👉 투두리스트 작성 (추가버튼)
- ┃ ┃ ┗ 📜 TodoHead.js 👉 오늘 날짜와 남은 할 일
- ┃ ┃ ┣ 📜 TodoItem.jsx 👉 할 일 항목 리스트
- ┃ ┃ ┗ 📜 TodoList.js 👉 할 일 항목들을 나열해줄 리스트 박스
+ ┃ ┃ ┣ 📜 TodoCreate.js 👉 투두리스트 작성 (추가버튼)
+ ┃ ┃ ┣ 📜 TodoHead.js 👉 오늘 날짜와 남은 할 일
+ ┃ ┃ ┣ 📜 TodoItem.js 👉 할 일 항목 리스트
+ ┃ ┃ ┣ 📜 TodoList.js 👉 할 일 항목들을 나열해줄 리스트 박스
  ┃ ┃ ┗ 📜 TodoTemplate.js 👉 투두리스트 레이아웃 (템플릿)
- ┃ ┣ 📜 App.jsx
- ┃ ┣ 📜 index.jsx
+ ┃ ┣ 📜 App.js
+ ┃ ┣ 📜 index.js
  ┗ ┗ 📜 TodoContext.js 👉 투두리스트 상태관리
 ```
