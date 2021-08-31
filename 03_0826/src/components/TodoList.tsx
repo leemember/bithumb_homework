@@ -1,77 +1,155 @@
-import React, { useState, useEffect, useCallback } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import TodoItem from "./TodoItem";
+import styled from "styled-components";
 
-//interface 3개 생성
-interface Iinput {
+// 타입 선언
+interface IInput {
   input: string;
-} //end
+}
 
 interface ITodoItem {
   idx: number;
   todo: string;
   isDelete: boolean;
-  onDelete: Function;
-} //end
+  onDelete?: Function;
+}
 
-//  todoList: ITodoItem[]; 배열로 지정
 interface ITodoList {
   todoList: ITodoItem[];
-} //end
+}
 
+//-----------------------------------------
+// 이벤트 핸들링
 function TodoList() {
-  //e는 element 라는 뜻으로 많이 사용한다.
-  // input 값을 초기화 시켜준다.
-  const [iInput, setInput] = useState<Iinput>({
-    // 🤍 iInput이거랑 <Iinput> 이거 연동해서 value에다가 넣어보자.
+  //상태관리 초기값
+  const [iInput, setInput] = useState<IInput>({
     input: "",
   });
 
-  //이번에도 제너릭의 타입으로 넣겠다!
   const [iTodoItem, setTodoItem] = useState<ITodoItem>({
     idx: 0,
-    todo: "string",
-    isDelete: true,
-    onDelete: Function,
+    todo: "",
+    isDelete: false,
   });
 
-  //📍추가
-  const onSubmit = () => {}; //end
+  const [iTodoList, setTodoList] = useState<ITodoList>({
+    todoList: [iTodoItem],
+  });
+
+  // 리랜더링 후에 iTodoItem이 보여질 수 있도록 배열 안에 입력
   useEffect(() => {
-    console.log("item 항목 업데이트 될 때 발생한다");
-  });
+    setTodoList({
+      todoList: iTodoList.todoList.concat(iTodoItem),
+    });
+  }, [iTodoItem]);
 
-  //📍input 창에 입력되도록
-  const handleInput = () => {}; //end
+  //입력 이벤트
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
 
-  //📍삭제
-  const onDelete = () => {}; //end
+    if (iInput.input.length > 0) {
+      setTodoItem({
+        idx: iTodoItem.idx + 1,
+        todo: iInput.input,
+        isDelete: false,
+      });
+    }
 
-  //📍투두리스트
-  const TodoList = () => {}; //end
+    setInput({
+      input: "",
+    });
+  };
 
-  const mc = { fontSize: "20px", color: "blue" };
-  const mk = { fontSize: "18px", color: "pink" };
+  //입력창 이벤트
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    console.log(iInput, name, value);
+    setInput({
+      input: value,
+    });
+  };
+
+  //삭제 이벤트
+  const onDelete = (idx: number) => {
+    const newTodo: ITodoItem[] = iTodoList.todoList.filter(
+      (item) => item.idx !== idx
+    );
+    setTodoList({
+      todoList: newTodo,
+    });
+  };
+
+  const TodoList = iTodoList.todoList.map((data, idx) => (
+    <TodoItem
+      key={idx}
+      idx={data.idx}
+      todo={data.todo}
+      isDelete={data.isDelete}
+      onDelete={onDelete}
+    />
+  ));
 
   return (
-    <div>
-      <h3>TodoList.tsx 문서</h3>
+    <TodoMain>
+      <h2> 타입스크립트 버전 TODO-LIST </h2>
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          name="content"
+          value={iInput.input}
+          onChange={handleInput}
+        />
+        <button type="submit" className="add">
+          추가
+        </button>
+      </form>
 
-      <div>
-        <form onSubmit={onSubmit}>
-          <label style={mc}>
-            입력 TODO :
-            <input
-              type="text"
-              style={{ padding: "3px" }}
-              value={iInput.input}
-            />
-          </label>
-          <button type="submit" style={mk} onChange={handleInput}>
-            추가
-          </button>
-        </form>
-      </div>
-    </div>
+      <TodoBox>{TodoList}</TodoBox>
+    </TodoMain>
   );
 }
 
 export default TodoList;
+
+const TodoBox = styled.ul`
+  width: 500px;
+  margin: 0 auto;
+  border: 1px solid #494949;
+  border-radius: 10px;
+  padding: 1em;
+  height: 500px;
+  overflow: auto;
+  margin-top: 2em;
+`;
+
+const TodoMain = styled.main`
+  h2 {
+    font-size: 2rem;
+    color: hotpink;
+  }
+  form {
+    width: 534px;
+    margin: 0 auto;
+    display: flex;
+  }
+  input {
+    padding: 0.5em;
+    font-size: 1.2em;
+    color: gray;
+    width: 80%;
+  }
+  .add {
+    padding: 0.5em;
+    font-size: 1.2em;
+    color: gray;
+    background: bisque;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 20%;
+    &:hover {
+      color: #262626;
+    }
+  }
+`;

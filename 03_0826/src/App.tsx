@@ -2,7 +2,7 @@ import TodoList from "./components/TodoList";
 
 function App() {
   return (
-    <div className="App" style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center" }}>
       <TodoList />
     </div>
   );
