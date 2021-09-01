@@ -24,3 +24,23 @@
 - 미션 : 첫번째 axios 개념 및 특징 요약하기. (최소 2페이지 ~ 5페이지 미만)
 
 - 제출 파일명: (이현주)0830_axios정리.pdf (PDF로 제출하기)
+
+### [5. 20210902](./05_0902/README.md)
+
+#### 미션 (test-axios 플젝)
+
+- JSON 데이터 : https://jsonplaceholder.typicode.com/photos
+
+## 📂 폴더 구조
+
+```
+📦 src
+ ┣ 📂components
+ ┃ ┃ ┗ 📜 Photo.js
+ ┗ ┗ 📜 App.js
+```
+
+<Photo 속성 1, 속성 2, 속성 3, 속성 4 />
+속성4에서는 그림 이미지 출력
+
+숙제 제출시 `(이현주)test-axios.zip` 압축파일 슬랙으로 제출하기.
