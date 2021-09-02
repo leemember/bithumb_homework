@@ -1,5 +1,7 @@
 # 🙆🏻‍♀️ axios 데이터 뿌리기 (9/2 목)
 
+## 👉 제출 기간
+- 9월 8일 수요일까지
 ## 👉 첫 번째 과제 미션
 
 - JSON 데이터 : https://jsonplaceholder.typicode.com/photos
