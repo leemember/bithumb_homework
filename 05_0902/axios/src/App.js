@@ -1,46 +1,62 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import styled, { createGlobalStyle } from "styled-components";
 import axios from "axios";
 import Photo from "./components/Photo";
 
-const App = () => {
-  const [photos, setPhotos] = useState(null);
-  const [loading, setLoading] = useState(false);
+function App() {
+  const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/photos"
-        );
-        setPhotos(response.data.photos);
-      } catch (e) {
-        console.log(e);
-      }
-      setLoading(false);
-    };
-    fetchData();
+    axios
+      .get("https://jsonplaceholder.typicode.com/photos")
+      .then(({ data }) => setPhotos(data));
   }, []);
 
-  //대기중 일때
-
-  if (loading) {
-    return <h3>로딩중...</h3>;
-  }
-
-  //아직 photos 값이 설정되지 않았을 때
-
-  if (!photos) {
-    return null;
-  }
+  console.log(photos);
 
   return (
-    <>
-      {photos.map((photo) => {
-        <Photo key={photo.id} />;
-      })}
-    </>
+    <main>
+      <Title>😊 현주의 컬러 박스 모음집 🎁</Title>
+      <Container>
+        <GlobalStyle />
+
+        {photos.map((photo, index) => (
+          <Photo
+            key={index}
+            id={photo.id}
+            title={photo.title}
+            thumbnailUrl={photo.thumbnailUrl}
+          />
+        ))}
+      </Container>
+    </main>
   );
-};
+}
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+  //배경색깔
+  background: #d9a7c7;
+  background: -webkit-linear-gradient(to right, #fffcdc, #d9a7c7);
+  background: linear-gradient(to right, #fffcdc, #d9a7c7);
+  box-sizing: border-box;
+  }
+`;
+
+const Container = styled.div`
+  height: 100%;
+  padding: 3em;
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  grid-gap: 40px;
+  justify-content: center;
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  font-weight: 500;
+  margin-top: 2em;
+`;
 
 export default App;
