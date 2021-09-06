@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+// import styled from "styled-components";
 
-const Photo = ({ id, title, url, thumbnailUrl }) => {
+const Photo = ({ photoItem }) => {
+  const { title, url, id, thumbnailUrl } = photoItem;
+
   return (
     <div>
-      <p>
-        <img src={thumbnailUrl} alt={title} height="150" />
-      </p>
-      <p>영화명 : {title}</p>
-      <p>장르 : {id}</p>
-      <p>개봉년도 : {url}년</p>
+      {thumbnailUrl && (
+        <div>
+          <a href={url}>
+            <img src={thumbnailUrl} alt={thumbnailUrl} />
+          </a>
+        </div>
+      )}
+
+      <h2>{title}</h2>
+      <h3>{id}</h3>
     </div>
   );
 };

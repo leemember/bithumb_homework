@@ -1,53 +1,46 @@
-import "./App.css";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-// import styled from "styled-components";
+import axios from "axios";
 import Photo from "./components/Photo";
 
-function App() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [photos, setPhoto] = useState(null);
+const App = () => {
+  const [photos, setPhotos] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const setPhotoData = async () => {
-      setIsLoading(true);
-
+    const fetchData = async () => {
+      setLoading(true);
       try {
-        const res = await axios.get(
+        const response = await axios.get(
           "https://jsonplaceholder.typicode.com/photos"
         );
-        setPhoto(res.data.photos);
+        setPhotos(response.data.photos);
       } catch (e) {
         console.log(e);
       }
-      setIsLoading(false);
+      setLoading(false);
     };
-    setPhotoData();
+    fetchData();
   }, []);
 
-  // 대기중 일 때
-  if (isLoading) {
-    return <h2>Loading...</h2>;
+  //대기중 일때
+
+  if (loading) {
+    return <h3>로딩중...</h3>;
   }
 
-  // 아직 Photo 값이 설정되지 않았을 때
+  //아직 photos 값이 설정되지 않았을 때
+
   if (!photos) {
     return null;
   }
 
-  // Photo 값이 유효할 때
   return (
-    <div>
-      {photos.map((photo) => (
-        <Photo
-          key={photo.id}
-          title={photo.title}
-          url={photo.url}
-          img={photo.thumbnailUrl}
-        />
-      ))}
-    </div>
+    <>
+      {photos.map((photo) => {
+        <Photo key={photo.id} />;
+      })}
+    </>
   );
-}
+};
 
 export default App;
